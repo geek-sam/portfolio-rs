@@ -104,7 +104,7 @@ const Testimonials: React.FC = () => {
 
         {/* Testimonial Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((item, index) => (
+          {testimonials.map((item) => (
             <article
               key={item.name}
               className="group relative flex min-h-[395px] flex-col rounded-[4px] border border-[#A98653] bg-[#E8E0D5] p-7 transition-all duration-500 ease-out hover:-translate-y-2 hover:border-[#684B62] hover:bg-[#F0E1C5] hover:shadow-[0_16px_35px_rgba(75,48,25,0.12)] sm:p-8"
