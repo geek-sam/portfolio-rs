@@ -103,7 +103,7 @@ const Process: React.FC = () => {
 
         {/* Process Steps */}
         <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-          {processSteps.map((step, index) => (
+          {processSteps.map((step) => (
             <article
               key={step.number}
               className="group border-t-[2px] border-[#C4A66D] pt-5 transition-colors duration-300 hover:border-[#684B62]"
