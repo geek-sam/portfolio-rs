@@ -19,10 +19,10 @@ const Footer: React.FC = () => {
 
       const angle = Math.atan2(dy, dx);
       const distance = Math.min(Math.sqrt(dx * dx + dy * dy), 300);
-      const movement = (distance / 300) * 11;
+      const movement = (distance / 300) * 80;
 
       setPupil({
-        x: Math.cos(angle) * movement,
+        x: Math.cos(angle) * movement * 0.65,
         y: Math.sin(angle) * movement * 0.65,
       });
     };

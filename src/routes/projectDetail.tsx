@@ -37,7 +37,9 @@ const OrnamentalDivider = () => (
 const ProjectDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
-  const { prev, next } = slug ? getAdjacentProjects(slug) : { prev: null, next: null };
+  const { prev, next } = slug
+    ? getAdjacentProjects(slug)
+    : { prev: null, next: null };
 
   if (!project) {
     return (
@@ -170,7 +172,7 @@ const ProjectDetailPage: React.FC = () => {
           className="mb-16 grid grid-cols-1 gap-6 border border-[#A98653] bg-[#E8E0D5] p-3 sm:p-5 lg:grid-cols-[1.3fr_0.7fr] lg:gap-8"
         >
           {/* Main Hero Artwork Frame */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-t-[120px] rounded-b-[4px] border border-[#A98653] bg-[#D9C4A0] shadow-[0_8px_24px_rgba(40,25,20,0.08)] sm:aspect-[16/11]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[4px] border border-[#A98653] bg-[#D9C4A0] shadow-[0_8px_24px_rgba(40,25,20,0.08)] sm:aspect-[16/11]">
             <img
               src={project.image}
               alt={`${project.title} hero artwork`}
@@ -189,7 +191,7 @@ const ProjectDetailPage: React.FC = () => {
 
               {/* Arched primary swatch */}
               <div
-                className="flex h-24 w-full items-center justify-center rounded-t-full shadow-inner"
+                className="flex h-36 w-full items-center justify-center rounded-t-[40px] shadow-inner"
                 style={{ backgroundColor: project.colors[0] }}
               >
                 <span
@@ -289,10 +291,13 @@ const ProjectDetailPage: React.FC = () => {
             )}
 
             <div className="border border-[#A98653]/60 bg-[#F1E5CD]/60 p-6">
-              <span className="font-hindi text-2xl text-[#A98653]">॥ साधना ॥</span>
+              <span className="font-hindi text-2xl text-[#A98653]">
+                ॥ साधना ॥
+              </span>
               <p className="mt-2 text-xs leading-[1.7] text-[#746B67]">
-                Designed in Jaipur with attention to paper grain, natural pigments,
-                and time-tested proportions inspired by Kishangarh miniatures.
+                Designed in Jaipur with attention to paper grain, natural
+                pigments, and time-tested proportions inspired by Kishangarh
+                miniatures.
               </p>
             </div>
           </div>

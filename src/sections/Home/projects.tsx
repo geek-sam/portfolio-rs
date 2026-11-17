@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomCursor from "../../components/common/customCursor";
 import { projects, type Project } from "../../data/projects";
 
@@ -27,23 +27,26 @@ const ProjectCard: React.FC<{
   onMouseMove: (e: React.MouseEvent<HTMLElement>) => void;
   onMouseLeave: () => void;
 }> = ({ project, index, onMouseEnter, onMouseMove, onMouseLeave }) => {
+  const navigate = useNavigate();
   return (
     <article
       id={`project-${index + 1}`}
       onMouseEnter={onMouseEnter}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="sticky mx-auto w-full rounded-[4px] border border-[#A98653] bg-[#E8E0D5] p-[5px] shadow-[0_10px_35px_rgba(63,43,20,0.06)]"
+      className="sticky mx-auto w-full rounded-[4px] border border-[#A98653] bg-[#E8E0D5] p-[5px] shadow-[0_10px_42px_rgba(63,43,20,0.16)]"
       style={{
         top: `${80 + index * 18}px`,
         zIndex: index + 1,
         cursor: "none", // hide default mouse pointer
       }}
+      // navigate to project page when clicked
+      onClick={() => navigate(`/project/${project.slug}`)}
     >
       {/* Inner Border */}
       <div className="grid min-h-[380px] grid-cols-1 gap-7 border border-[#C9A96F] p-5 sm:p-7 lg:grid-cols-[1.25fr_0.75fr] lg:items-center lg:gap-9 lg:p-10">
         {/* Left: Artwork and Palette */}
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(76px,0.42fr)] gap-2 border border-[#C9A96F] bg-[#F1E5CD] p-2 sm:gap-3 sm:p-3">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(76px,0.42fr)] gap-2 border border-[#C9A96F] bg-[#F1E5CD] p-2 sm:gap-3 sm:p-3 transition-all duration-500 ease-out hover:-translate-y-2 hover:border-[#684B62] hover:bg-[#F0E1C5] hover:shadow-[0_16px_35px_rgba(75,48,25,0.12)]">
           {/* Artwork */}
           <div className="relative min-h-[240px] overflow-hidden border border-[#A98653] sm:min-h-[280px] lg:min-h-[475px]">
             <img
@@ -212,7 +215,7 @@ const Projects: React.FC = () => {
 
         {/* Stacked Project Cards */}
         <div className="relative flex flex-col gap-16 space-y-8">
-          {projects.map((project, index) => (
+          {projects.slice(0, 4).map((project, index) => (
             <ProjectCard
               key={project.number}
               project={project}
