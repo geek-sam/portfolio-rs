@@ -10,59 +10,58 @@ const Preloader: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    let typingTimer: ReturnType<typeof setInterval>;
+    let underlineTimer: ReturnType<typeof setTimeout>;
+    let subtitleTimer: ReturnType<typeof setTimeout>;
+    let exitTimer: ReturnType<typeof setTimeout>;
+    let removeTimer: ReturnType<typeof setTimeout>;
+
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+
+    const finishLoader = () => {
+      setIsExiting(true);
+
+      removeTimer = setTimeout(() => {
+        setIsVisible(false);
+      }, 850);
+    };
 
     if (prefersReducedMotion) {
       setTypedText(NAME);
       setShowUnderline(true);
       setShowSubtitle(true);
 
-      const exitTimer = window.setTimeout(() => {
-        setIsExiting(true);
-      }, 1000);
-
-      const removeTimer = window.setTimeout(() => {
+      removeTimer = setTimeout(() => {
         setIsVisible(false);
-      }, 1800);
+      }, 500);
 
-      return () => {
-        clearTimeout(exitTimer);
-        clearTimeout(removeTimer);
-      };
+      return () => clearTimeout(removeTimer);
     }
 
     let index = 0;
-    let subtitleTimer: number;
-    let exitTimer: number;
-    let removeTimer: number;
 
-    // 1. Type the name character by character
-    const typingInterval = window.setInterval(() => {
+    // 1. Typing animation
+    typingTimer = setInterval(() => {
       index++;
 
       setTypedText(NAME.slice(0, index));
 
       if (index >= NAME.length) {
-        clearInterval(typingInterval);
+        clearInterval(typingTimer);
 
-        // 2. Draw underline
-        subtitleTimer = window.setTimeout(() => {
+        // 2. Underline animation
+        underlineTimer = setTimeout(() => {
           setShowUnderline(true);
 
-          // 3. Reveal subtitle
-          exitTimer = window.setTimeout(() => {
+          // 3. Subtitle animation
+          subtitleTimer = setTimeout(() => {
             setShowSubtitle(true);
 
             // 4. Exit loader
-            removeTimer = window.setTimeout(() => {
-              setIsExiting(true);
-
-              // 5. Remove loader from DOM
-              window.setTimeout(() => {
-                setIsVisible(false);
-              }, 900);
+            exitTimer = setTimeout(() => {
+              finishLoader();
             }, 1100);
           }, 750);
         }, 250);
@@ -70,7 +69,8 @@ const Preloader: React.FC = () => {
     }, 115);
 
     return () => {
-      clearInterval(typingInterval);
+      clearInterval(typingTimer);
+      clearTimeout(underlineTimer);
       clearTimeout(subtitleTimer);
       clearTimeout(exitTimer);
       clearTimeout(removeTimer);
@@ -81,24 +81,22 @@ const Preloader: React.FC = () => {
 
   return (
     <div
-      className={`preloader fixed inset-0 z-[9999] flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#684B62] ${
+      className={`preloader fixed inset-0 z-[9999] flex min-h-[100svh] items-center justify-center overflow-hidden ${
         isExiting ? "preloader-exit" : ""
       }`}
-      aria-label="Loading Ruhani Sethia Studio"
       role="status"
-      aria-live="polite"
+      aria-label="Loading Ruhani Sethia Studio"
     >
-      {/* Subtle Background Texture */}
-      <div className="preloader-texture pointer-events-none absolute inset-0" />
+      {/* Background Texture */}
+      <div className="preloader-texture absolute inset-0 pointer-events-none" />
 
-      {/* Center Logo */}
+      {/* Main Content */}
       <div className="relative z-10 flex w-full max-w-[1000px] flex-col items-center px-6">
-        {/* Animated Name */}
-        <div className="relative w-full text-center">
-          <h1 className="preloader-name inline-block whitespace-nowrap font-normal text-[#F2EADB]">
+        {/* Name */}
+        <div className="w-full text-center">
+          <h1 className="preloader-name inline-block whitespace-nowrap font-normal text-[#F3EFE7]">
             {typedText}
 
-            {/* Typing Cursor */}
             <span
               className={`typing-cursor ${
                 typedText.length === NAME.length ? "cursor-hidden" : ""
@@ -107,7 +105,7 @@ const Preloader: React.FC = () => {
             />
           </h1>
 
-          {/* Animated Underline */}
+          {/* Underline */}
           <svg
             viewBox="0 0 780 38"
             className={`preloader-underline mx-auto mt-[-3px] w-[90%] max-w-[780px] ${
@@ -120,7 +118,7 @@ const Preloader: React.FC = () => {
             <path
               className="underline-path"
               d="M5 21 C180 35 480 21 773 3 C750 15 720 27 685 31"
-              stroke="#E5C47F"
+              stroke="#D5B77B"
               strokeWidth="2.4"
               strokeLinecap="round"
             />
@@ -129,7 +127,7 @@ const Preloader: React.FC = () => {
 
         {/* Subtitle */}
         <p
-          className={`preloader-subtitle mt-8 text-center text-[10px] font-semibold uppercase tracking-[3px] text-[#EADABD] sm:text-[12px] ${
+          className={`preloader-subtitle mt-8 text-center text-[10px] font-semibold uppercase tracking-[3px] text-[#E8E0D5] sm:text-[12px] ${
             showSubtitle ? "subtitle-visible" : ""
           }`}
         >

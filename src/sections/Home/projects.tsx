@@ -1,73 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import CustomCursor from "../../components/common/customCursor";
-
-interface Project {
-  number: string;
-  title: string;
-  category: string;
-  year: string;
-  description: string;
-  role: string;
-  image: string;
-  brandName: string;
-  colors: string[];
-  imagePosition?: string;
-}
-
-const projects: Project[] = [
-  {
-    number: "०१",
-    title: "Tanpura Records",
-    category: "Identity · Album Art Direction",
-    year: "2025",
-    description:
-      "A classical-music label wanted to feel collectible, not dusty. We built a type-led identity around the tanpura's long neck and a palette lifted from eighteenth-century court portraits.",
-    role: "Art direction, identity, twelve album covers",
-    brandName: "TANPURA",
-    image:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1000&auto=format&fit=crop",
-    colors: ["#684B62", "#684B62", "#84916D", "#E8E0D5", "#2C201B"],
-  },
-  {
-    number: "०२",
-    title: "Gundalao Hotels",
-    category: "Brand System · Wayfinding",
-    year: "2024",
-    description:
-      "A lakeside heritage hotel reopened after a long restoration. The system borrows the barge's canopy arches for signage, keycards, menus and a custom numeral set.",
-    role: "Brand strategy, identity, signage, print",
-    brandName: "Gundalao",
-    image:
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1000&auto=format&fit=crop",
-    colors: ["#293A36", "#293A36", "#D9A69F", "#B18A38", "#F0E5CE"],
-  },
-  {
-    number: "०३",
-    title: "Phuljhadi Sweets",
-    category: "Festive Packaging · Diwali",
-    year: "2023",
-    description:
-      "A Diwali gift range for a ninety-year-old mithai shop: twelve boxes that open like palace doors, foiled in gold and lit by painted fireworks.",
-    role: "Packaging design, illustration direction, press checks",
-    brandName: "फुलझड़ी",
-    image:
-      "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1000&auto=format&fit=crop",
-    colors: ["#291D19", "#291D19", "#E5A83C", "#684B62", "#F0E5CE"],
-  },
-  {
-    number: "०४",
-    title: "Bani & Co. Jewellers",
-    category: "Identity · Campaign",
-    year: "2026",
-    description:
-      "A third-generation jeweller's first campaign. We cast their pieces in miniature-style portraits and let the famous Bani Thani profile become the monogram.",
-    role: "Identity, campaign art direction, lookbook",
-    brandName: "Bani & Co.",
-    image:
-      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1000&auto=format&fit=crop",
-    colors: ["#C8A9A7", "#C8A9A7", "#AA8133", "#F0E5CE", "#6E5A4D"],
-  },
-];
+import { projects, type Project } from "../../data/projects";
 
 const LotusDivider = () => (
   <svg
@@ -169,7 +103,12 @@ const ProjectCard: React.FC<{
 
           {/* Project Title */}
           <h3 className="mb-3 font-serif text-[36px] italic leading-[1.03] tracking-[-1.5px] text-[#292329] sm:text-[64px]">
-            {project.title}
+            <Link
+              to={`/work/${project.slug}`}
+              className="transition-colors duration-300 hover:text-[#684B62]"
+            >
+              {project.title}
+            </Link>
           </h3>
 
           {/* Description */}
@@ -188,13 +127,13 @@ const ProjectCard: React.FC<{
           </div>
 
           {/* CTA */}
-          <a
-            href={`#project-${index + 1}`}
-            className="mt-4 inline-flex w-fit items-center gap-2 font-serif text-[16px] text-[#684B62] transition-all duration-300 hover:gap-4"
+          <Link
+            to={`/work/${project.slug}`}
+            className="mt-4 inline-flex w-fit items-center gap-2 font-serif text-[16px] text-[#684B62] transition-all duration-300 hover:gap-4 hover:text-[#292329]"
           >
             See how it came together
             <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </article>

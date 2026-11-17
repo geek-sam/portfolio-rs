@@ -1,98 +1,6 @@
 import React, { useState } from "react";
-
-interface Project {
-  id: number;
-  number: string;
-  title: string;
-  category: string;
-  year: string;
-  description: string;
-  brandName: string;
-  image: string;
-  colors: string[];
-  imagePosition?: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    number: "०१",
-    title: "Tanpura Records",
-    category: "Identity",
-    year: "2025",
-    description:
-      "A classical-music label wanted to feel collectible, not dusty. We built a type-led identity around the tanpura's long neck and a palette lifted from eighteenth-century court portraits.",
-    brandName: "TANPURA",
-    image:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&auto=format&fit=crop",
-    colors: ["#684B62", "#684B62", "#87927B", "#E8E0D5", "#2B201B"],
-  },
-  {
-    id: 2,
-    number: "०२",
-    title: "Gundalao Hotels",
-    category: "Brand System",
-    year: "2024",
-    description:
-      "A lakeside heritage hotel reopened after a long restoration. The system borrows the barge's canopy arches for signage, keycards, menus and a custom numeral set.",
-    brandName: "Gundalao",
-    image:
-      "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1200&auto=format&fit=crop",
-    colors: ["#293A36", "#293A36", "#DCA8A1", "#AD8331", "#F0E5CE"],
-  },
-  {
-    id: 3,
-    number: "०३",
-    title: "Phuljhadi Sweets",
-    category: "Festive Packaging",
-    year: "2023",
-    description:
-      "A Diwali gift range for a ninety-year-old mithai shop: twelve boxes that open like palace doors, foiled in gold and lit by painted fireworks.",
-    brandName: "फुलझड़ी",
-    image:
-      "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1200&auto=format&fit=crop",
-    colors: ["#291D19", "#291D19", "#E6A63A", "#684B62", "#F0E5CE"],
-  },
-  {
-    id: 4,
-    number: "०४",
-    title: "Bani & Co. Jewellers",
-    category: "Identity",
-    year: "2026",
-    description:
-      "A third-generation jeweller's first campaign. We cast their pieces into miniature-style portraits and let the famous Bani Thani profile become the monogram.",
-    brandName: "Bani & Co.",
-    image:
-      "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1200&auto=format&fit=crop",
-    colors: ["#C8A9A7", "#C8A9A7", "#AD8331", "#F0E5CE", "#6E5A4D"],
-  },
-  {
-    id: 5,
-    number: "०५",
-    title: "Chitthi Stationers",
-    category: "Identity",
-    year: "2026",
-    description:
-      "A letterpress studio in Jaipur wanted people to write letters again. We built a stationery range around the painted love letters of Rajput courts.",
-    brandName: "Chitthi",
-    image:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&auto=format&fit=crop",
-    colors: ["#87927B", "#87927B", "#F0E5CE", "#AD8331", "#291D19"],
-  },
-  {
-    id: 6,
-    number: "०६",
-    title: "The Offering Journal",
-    category: "Editorial Design",
-    year: "2022",
-    description:
-      "A twice-yearly journal on craft and ritual. We designed the masthead, page system and covers, and art-directed its first four issues.",
-    brandName: "The Offering",
-    image:
-      "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1200&auto=format&fit=crop",
-    colors: ["#E8E0D5", "#E8E0D5", "#684B62", "#293A36", "#87927B"],
-  },
-];
+import { Link } from "react-router-dom";
+import { projects, type Project } from "../data/projects";
 
 const categories = [
   "All",
@@ -139,8 +47,12 @@ const OrnamentalDivider = () => (
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <article className="group min-w-0">
-      {/* Artwork and Brand Palette */}
-      <div className="grid grid-cols-[minmax(0,1fr)_minmax(76px,0.34fr)] gap-2 border border-[#A98653] bg-[#E8E0D5] p-2 sm:gap-2.5 sm:p-2.5">
+      {/* Artwork and Brand Palette - Clickable */}
+      <Link
+        to={`/work/${project.slug}`}
+        aria-label={`View ${project.title} case study`}
+        className="block grid grid-cols-[minmax(0,1fr)_minmax(76px,0.34fr)] gap-2 border border-[#A98653] bg-[#E8E0D5] p-2 transition-all duration-300 hover:border-[#684B62] hover:shadow-[0_8px_24px_rgba(40,25,20,0.1)] sm:gap-2.5 sm:p-2.5"
+      >
         {/* Artwork */}
         <div className="relative aspect-square overflow-hidden border border-[#A98653] bg-[#D9C4A0]">
           <img
@@ -179,7 +91,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             />
           ))}
         </div>
-      </div>
+      </Link>
 
       {/* Project Information */}
       <div className="mt-4 grid grid-cols-[44px_1fr] gap-3 sm:grid-cols-[46px_1fr]">
@@ -191,7 +103,9 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         <div className="min-w-0">
           {/* Title */}
           <h3 className="font-serif text-[22px] leading-tight text-[#292329] transition-colors duration-300 group-hover:text-[#684B62] sm:text-[24px]">
-            {project.title}
+            <Link to={`/work/${project.slug}`} className="hover:underline">
+              {project.title}
+            </Link>
           </h3>
 
           {/* Category and Year */}
@@ -209,6 +123,15 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           <p className="mt-2 max-w-[490px] text-[12px] leading-[1.65] text-[#746B67] sm:text-[13px]">
             {project.description}
           </p>
+
+          {/* Action Link */}
+          <Link
+            to={`/work/${project.slug}`}
+            className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[1.4px] text-[#684B62] transition-all duration-300 hover:gap-3"
+          >
+            <span>See Project</span>
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </article>
