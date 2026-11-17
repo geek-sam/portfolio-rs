@@ -83,7 +83,10 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* Center Portrait */}
-          <motion.div className="relative z-20 mt-12 flex justify-center md:absolute md:left-[49%] md:top-10 md:mt-0 md:block">
+          <motion.div
+            style={{ y: imageY }}
+            className="relative z-20 mt-12 flex justify-center md:absolute md:left-[49%] md:top-10 md:mt-0 md:block"
+          >
             {/* Decorative Star */}
             <span className="absolute -left-8 top-4 text-[#C39B4C]">✦</span>
 
